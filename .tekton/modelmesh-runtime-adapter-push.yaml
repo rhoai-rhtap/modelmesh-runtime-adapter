@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-#test
+#retest
   annotations:
     build.appstudio.openshift.io/repo: https://github.com/rhoai-rhtap/modelmesh-runtime-adapter?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
