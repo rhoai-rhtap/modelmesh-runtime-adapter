@@ -132,7 +132,7 @@ RUN go build -o triton-adapter model-mesh-triton-adapter/main.go && \
 ###############################################################################
 # Stage 3: Copy build assets to create the smallest final runtime image
 ###############################################################################
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8 as runtime
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10-1018 as runtime
 
 ARG USER=2000
 
