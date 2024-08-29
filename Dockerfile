@@ -16,8 +16,8 @@
 ###############################################################################
 # Stage 1: Create the developer image for the BUILDPLATFORM only
 ###############################################################################
-ARG GOLANG_VERSION=1.19
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.19 AS develop
+ARG GOLANG_VERSION=1.21
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:$GOLANG_VERSION AS develop
 
 ARG PROTOC_VERSION=21.5
 
@@ -77,7 +77,7 @@ RUN set -eux; \
 
 WORKDIR /opt/app
 
-COPY go.mod go.sum ./
+
 
 # Install go protoc plugins
 # no required module provides package google.golang.org/grpc/cmd/protoc-gen-go-grpc
@@ -98,9 +98,6 @@ RUN git init && \
     git config --global --add safe.directory "*" && \
     rm -rf .git
 
-# Download dependencies before copying the source so they will be cached
-RUN go mod download
-
 # the ubi/go-toolset image doesn't define ENTRYPOINT or CMD, but we need it to run 'make develop'
 CMD /bin/bash
 
@@ -108,9 +105,13 @@ CMD /bin/bash
 ###############################################################################
 # Stage 2: Run the go build with BUILDPLATFORM's native go compiler
 ###############################################################################
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.19 AS build
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:$GOLANG_VERSION  AS build
 
 LABEL image="build"
+
+COPY go.mod go.sum ./
+# Download dependencies before copying the source so they will be cached
+RUN go mod download
 
 # Copy the source
 COPY . ./
