@@ -16,7 +16,7 @@
 # Stage 1: Create the developer image for the BUILDPLATFORM only
 ###############################################################################
 ARG GOLANG_VERSION=1.21
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:$GOLANG_VERSION AS develop
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS develop
 
 ARG PROTOC_VERSION=21.5
 
@@ -108,7 +108,7 @@ CMD /bin/bash
 ###############################################################################
 # Stage 2: Run the go build with BUILDPLATFORM's native go compiler
 ###############################################################################
-FROM --platform=$BUILDPLATFORM develop AS build
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS build
 
 LABEL image="build"
 
