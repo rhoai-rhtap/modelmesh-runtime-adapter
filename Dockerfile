@@ -145,19 +145,18 @@ USER root
 
 # install python to convert keras to tf
 # NOTE: tensorflow not supported on PowerPC (ppc64le) or System Z (s390x) https://github.com/tensorflow/tensorflow/issues/46181
-RUN microdnf install gcc \
-       gcc-c++ \
-       python38-devel \
-       python38 \
-    && ln -sf /usr/bin/python3 /usr/bin/python \
-    && ln -sf /usr/bin/pip3 /usr/bin/pip \
-    && true
+#RUN microdnf install gcc \
+  #     gcc-c++ \
+  #     python38-devel \
+  #     python38 \
+   # && ln -sf /usr/bin/python3 /usr/bin/python \
+   # && ln -sf /usr/bin/pip3 /usr/bin/pip \
+   # && true
 
 # need to upgrade pip and install wheel before installing grpcio, before installing tensorflow on aarch64
 # use caching to speed up multi-platform builds
 ENV PIP_CACHE_DIR=/root/.cache/pip
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --upgrade pip && \
+RUN pip install --upgrade pip && \
     pip install wheel && \
     pip install grpcio && \
     # pin to 3.10.0 to avoid error: libhdf5.so: cannot open shared object file: No such file or directory \
