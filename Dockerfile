@@ -29,7 +29,7 @@ ENV HOME=/root
 RUN --mount=type=cache,target=/root/.cache/dnf:rw \
     dnf install --setopt=cachedir=/root/.cache/dnf -y --nodocs \
         nodejs \
-        python39 \
+        python38 \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
     && true
@@ -121,9 +121,17 @@ COPY . ./
 ARG TARGETOS=amd64
 ARG TARGETARCH=linux
 
+WORKDIR /opt/app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
 # Build the binaries using native go compiler from BUILDPLATFORM but compiled output for TARGETPLATFORM
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
-RUN go build -o triton-adapter model-mesh-triton-adapter/main.go && \
+RUN export GOOS=${TARGETOS:-linux} && \
+    export GOARCH=${TARGETARCH:-amd64} && \
+    go build -o puller model-serving-puller/main.go && \
+    go build -o triton-adapter model-mesh-triton-adapter/main.go && \
     go build -o mlserver-adapter model-mesh-mlserver-adapter/main.go && \
     go build -o ovms-adapter model-mesh-ovms-adapter/main.go && \
     go build -o torchserve-adapter model-mesh-torchserve-adapter/main.go
@@ -157,8 +165,9 @@ USER root
 RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
     gcc \
     gcc-c++ \
-    python39 \
-    python39-devel \
+    python38 \
+    python38-devel \
+    # validates if it still needed in the builder iamge.
     nodejs \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
@@ -177,6 +186,7 @@ RUN pip install grpcio && \
     # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
     # for arm yet.
     pip install h5py==3.10.0 && \
+    pip install tensorflow-io-gcs-filesystem==0.34.0 && \
     pip install tensorflow
 
 USER ${USER}

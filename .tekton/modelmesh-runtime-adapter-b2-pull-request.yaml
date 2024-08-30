@@ -32,7 +32,7 @@ spec:
     value: .
   - name: prefetch-input
     value: |
-      [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": ".", "requirements_files": ["requirements.txt"], "requirements_build_files": ["requirements-build.txt"]}]
+      [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": "konflux-files", "requirements_files": ["requirements.txt"], "allow_binary": "true"}]
   pipelineSpec:
     finally:
     - name: show-sbom
@@ -477,7 +477,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 1Gi
+            storage: 5Gi
       status: {}
   - name: git-auth
     secret:
