@@ -1,3 +1,7 @@
+Updating dependencies
+Resolving dependencies...
+
+Writing lock file
 absl-py==2.1.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:526a04eadab8b4ee719ce68f204172ead1027549089702d99b9059f129ff1308 \
     --hash=sha256:7820790efbb316739cde8b4e19357243fc3608a152024288513dd968d7d959ff
@@ -347,16 +351,52 @@ setuptools==74.0.0 ; python_version >= "3.8" and python_version < "3.12" \
 six==1.16.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
-tensorboard-data-server @ https://github.com/tensorflow/tensorboard/archive/refs/tags/data-server-v0.7.2.tar.gz \
-    --hash=sha256:7e0610d205889588983836ec05dc098e80f97b7e7bbff7e994ebb78f578d0ddb
-tensorboard @ https://github.com/tensorflow/tensorboard/archive/refs/tags/2.13.0.tar.gz \
+tensorboard-data-server==0.7.2 ; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:7e0610d205889588983836ec05dc098e80f97b7e7bbff7e994ebb78f578d0ddb \
+    --hash=sha256:9fe5d24221b29625dbc7328b0436ca7fc1c23de4acf4d272f1180856e32f9f60 \
+    --hash=sha256:ef687163c24185ae9754ed5650eb5bc4d84ff257aabdc33f0cc6f74d8ba54530
+tensorboard==2.13.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:ab69961ebddbddc83f5fa2ff9233572bdad5b883778c35e4fe94bf1798bd8481
-tensorflow-estimator @ https://github.com/tensorflow/estimator/archive/refs/tags/v2.13.0.tar.gz  \
+tensorflow-estimator==2.13.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:6f868284eaa654ae3aa7cacdbef2175d0909df9fcf11374f5166f8bf475952aa
-tensorflow-io-gcs-filesystem @ https://github.com/tensorflow/io/archive/refs/tags/v0.37.1.tar.gz \
-    --hash=sha256:0df00891669390078a003cedbdd3b8e645c718b111917535fa1d7725e95cdb95
-tensorflow @ https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.13.1.tar.gz \
-    --hash=sha256:89c07aebd4f41fbe0d08cc88aef00305542134f2f16d3b62918dc3c1182f33e2
+tensorflow-io-gcs-filesystem==0.37.1 ; python_version >= "3.8" and python_version < "3.12" and platform_machine != "arm64" or python_version >= "3.8" and python_version < "3.12" and platform_system != "Darwin" \
+    --hash=sha256:0df00891669390078a003cedbdd3b8e645c718b111917535fa1d7725e95cdb95 \
+    --hash=sha256:249c12b830165841411ba71e08215d0e94277a49c551e6dd5d72aab54fe5491b \
+    --hash=sha256:257aab23470a0796978efc9c2bcf8b0bc80f22e6298612a4c0a50d3f4e88060c \
+    --hash=sha256:286389a203a5aee1a4fa2e53718c661091aa5fea797ff4fa6715ab8436b02e6c \
+    --hash=sha256:32c50ab4e29a23c1f91cd0f9ab8c381a0ab10f45ef5c5252e94965916041737c \
+    --hash=sha256:426de1173cb81fbd62becec2012fc00322a295326d90eb6c737fab636f182aed \
+    --hash=sha256:6e1f2796b57e799a8ca1b75bf47c2aaa437c968408cc1a402a9862929e104cda \
+    --hash=sha256:8943036bbf84e7a2be3705cb56f9c9df7c48c9e614bb941f0936c58e3ca89d6f \
+    --hash=sha256:8febbfcc67c61e542a5ac1a98c7c20a91a5e1afc2e14b1ef0cb7c28bc3b6aa70 \
+    --hash=sha256:9679b36e3a80921876f31685ab6f7270f3411a4cc51bc2847e80d0e4b5291e27 \
+    --hash=sha256:b02f9c5f94fd62773954a04f69b68c4d576d076fd0db4ca25d5479f0fbfcdbad \
+    --hash=sha256:ee5da49019670ed364f3e5fb86b46420841a6c3cb52a300553c63841671b3e6d \
+    --hash=sha256:ee7c8ee5fe2fd8cb6392669ef16e71841133041fee8a330eff519ad9b36e4556 \
+    --hash=sha256:fbb33f1745f218464a59cecd9a18e32ca927b0f4d77abd8f8671b645cc1a182f \
+    --hash=sha256:fe8dcc6d222258a080ac3dfcaaaa347325ce36a7a046277f6b3e19abc1efb3c5 \
+    --hash=sha256:ffebb6666a7bfc28005f4fbbb111a455b5e7d6cd3b12752b7050863ecb27d5cc
+tensorflow==2.13.1 ; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:04538df649aa0be5050695cdb0c8f2c26e6122ca04c7c1e4471b23c0d6c490cf \
+    --hash=sha256:17b9a82d69abc487ebad503d61acd11fb24f3b0105be669b5319e55f90f0ca21 \
+    --hash=sha256:2ab5efb2d0e888a1f65539f495744aaab542ae5e36ed33e50e98cf8b9f088c2c \
+    --hash=sha256:2cd54d7cf979de0e407db182eea27dbed37361af5c329c2dbf71c486be3e432b \
+    --hash=sha256:3bf992bf62cf628f5ff57694312037885ba8cc7b8b0d51b3d772e350a717d2d0 \
+    --hash=sha256:3dd6555e9248bace921a311ff05d88239a6b7e96bcd024c5df4c2eaeb1678ac3 \
+    --hash=sha256:46024ba77aaf5c0b578aadf0c75320e539e135ddfe731a1ee241b039c332e565 \
+    --hash=sha256:56f35d88c419d59ed5e2823f1c69d794c8f28b77f3aed5300e454e7513a6228e \
+    --hash=sha256:69add96604b9a4e8e8e00505953478027964445d8eb8d7541538ef38159b7f27 \
+    --hash=sha256:884dbafa213f8bea7869977f88bfb404051b65aa17dc7927ff4bfe47e3fc839b \
+    --hash=sha256:89959a3a31f17c3a0099d7e3c48b20a02eb01f3c1dbf96c6cc5fbf84a623e176 \
+    --hash=sha256:a3e1e42dd286adf0fd91cf68a405a30a21a2c8c09b9515b91faa5704a09ff803 \
+    --hash=sha256:aaf37fa1b434568b8c853ffdeeff9e477237495d2f2bbdb0eac61a6bcac779e8 \
+    --hash=sha256:c23ebcaa2131062a9bf6fe2634aef8c95f9c043b2dc814bc2f8765ba7a4e3612 \
+    --hash=sha256:c2f109daa5d0cbabb3df5fdebcde0ca895d891e18d03e08cb6742c96a6be7012 \
+    --hash=sha256:dbd7c5c427dacdea1ce2dce29b9a7b3c7409d314fa6f413b7fe58ed5635af754 \
+    --hash=sha256:deb204fc8c98ceff81f0f776ffb5172e1a6892143c7bfee90a865e9d5e4bbee2 \
+    --hash=sha256:e42cdf625125c9ef99d29310774617990915cd046125ef5e9624799659a7d3e8 \
+    --hash=sha256:f2935ea4bdf37c1840f4d6ed1ddbb4990dc5ae68e1bc8bba4587bac413195c2f \
+    --hash=sha256:fbb68c8ea407f515393ef50bd8ccbbc01914cc76f39e2ca18c238a3189230f71
 termcolor==2.4.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:9297c0df9c99445c2412e832e882a7884038a25617c60cea2ad69488d4040d63 \
     --hash=sha256:aab9e56047c8ac41ed798fa36d892a37aca6b3e9159f3e0c24bc64a9b3ac7b7a
@@ -446,4 +486,3 @@ wrapt==1.16.0 ; python_version >= "3.8" and python_version < "3.12" \
 zipp==3.20.1 ; python_version >= "3.8" and python_version < "3.10" \
     --hash=sha256:9960cd8967c8f85a56f920d5d507274e74f9ff813a0ab8889a5b5be2daf44064 \
     --hash=sha256:c22b14cc4763c5a5b04134207736c107db42e9d3ef2d9779d465f5f1bcba572b
-    
