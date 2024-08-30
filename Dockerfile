@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# syntax=docker/dockerfile:1.2
 ###############################################################################
 # Stage 1: Create the developer image for the BUILDPLATFORM only
 ###############################################################################
@@ -81,8 +82,7 @@ COPY go.mod go.sum ./
 # Install go protoc plugins
 # no required module provides package google.golang.org/grpc/cmd/protoc-gen-go-grpc
 # to add it run `go get google.golang.org/grpc/cmd/protoc-gen-go-grpc`
-ENV GOPATH $HOME/go
-ENV PATH $GOPATH/bin:$PATH
+ENV PATH $HOME/go/bin:$PATH
 RUN true \
     && go get google.golang.org/grpc/cmd/protoc-gen-go-grpc \
     && go install google.golang.org/protobuf/cmd/protoc-gen-go \
@@ -118,17 +118,12 @@ COPY . ./
 # https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 # don't provide "default" values (e.g. 'ARG TARGETARCH=amd64') for non-buildx environments,
 # see https://github.com/docker/buildx/issues/510
-ARG TARGETOS
-ARG TARGETARCH
+ARG TARGETOS=amd64
+ARG TARGETARCH=linux
 
 # Build the binaries using native go compiler from BUILDPLATFORM but compiled output for TARGETPLATFORM
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
-RUN --mount=type=cache,target=/root/.cache/go-build \
-    --mount=type=cache,target=/go/pkg \
-    export GOOS=${TARGETOS:-linux} && \
-    export GOARCH=${TARGETARCH:-amd64} && \
-    go build -o puller model-serving-puller/main.go && \
-    go build -o triton-adapter model-mesh-triton-adapter/main.go && \
+RUN go build -o triton-adapter model-mesh-triton-adapter/main.go && \
     go build -o mlserver-adapter model-mesh-mlserver-adapter/main.go && \
     go build -o ovms-adapter model-mesh-ovms-adapter/main.go && \
     go build -o torchserve-adapter model-mesh-torchserve-adapter/main.go
@@ -137,7 +132,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
 ###############################################################################
 # Stage 3: Copy build assets to create the smallest final runtime image
 ###############################################################################
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest as runtime
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8 as runtime
 
 ARG USER=2000
 
@@ -145,25 +140,45 @@ USER root
 
 # install python to convert keras to tf
 # NOTE: tensorflow not supported on PowerPC (ppc64le) or System Z (s390x) https://github.com/tensorflow/tensorflow/issues/46181
-#RUN microdnf install gcc \
-  #     gcc-c++ \
-  #     python38-devel \
-  #     python38 \
-   # && ln -sf /usr/bin/python3 /usr/bin/python \
-   # && ln -sf /usr/bin/pip3 /usr/bin/pip \
-   # && true
+#--mount=type=cache,target=/root/.cache/microdnf:rw \
+# RUN microdnf install --setopt=cachedir=/root/.cache/microdnf \
+#        gcc \
+#        gcc-c++ \
+#        python38-devel \
+#        python38 \
+
+# Install packages with modular metadata workaround
+# RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
+#     gcc \
+#     gcc-c++ \
+#     python38 \
+#     python38-devel \
+#     nodejs \
+RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
+    gcc \
+    gcc-c++ \
+    python38 \
+    python38-devel \
+    nodejs \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
+    && ln -sf /usr/bin/pip3 /usr/bin/pip \
+    && true
+
+COPY requirements.txt requirements.txt
 
 # need to upgrade pip and install wheel before installing grpcio, before installing tensorflow on aarch64
 # use caching to speed up multi-platform builds
 ENV PIP_CACHE_DIR=/root/.cache/pip
+##--mount=type=cache,target=/root/.cache/pip \
 RUN pip install --upgrade pip && \
     pip install wheel && \
+    pip install flit && \
+    pip install flit_core==3.9.0 && \
     pip install grpcio && \
-    # pin to 3.10.0 to avoid error: libhdf5.so: cannot open shared object file: No such file or directory \
-    # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
-    # for arm yet.
-    pip install h5py==3.10.0 && \
     pip install tensorflow
+    
+#pip install -r requirements.txt
+
 
 USER ${USER}
 
