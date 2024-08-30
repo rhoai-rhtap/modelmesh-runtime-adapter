@@ -170,8 +170,8 @@ COPY requirements.txt requirements.txt
 # use caching to speed up multi-platform builds
 ENV PIP_CACHE_DIR=/root/.cache/pip
 ##--mount=type=cache,target=/root/.cache/pip \
-RUN pip install --upgrade pip && \
-    pip install wheel && \
+# RUN pip install --upgrade pip && \
+Run pip install wheel && \
     pip install flit && \
     pip install flit_core==3.9.0 && \
     pip install grpcio && \
