@@ -112,6 +112,8 @@ FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 A
 
 LABEL image="build"
 
+WORKDIR /opt/app
+
 # Copy the source
 COPY . ./
 
