@@ -200,7 +200,7 @@ USER ${USER}
 COPY version /etc/modelmesh-version
 
 # Copy over the binary and use it as the entrypoint
-COPY --from=registry.access.redhat.com/ubi8/go-toolset:1.2 /opt/app/puller /opt/app/
+COPY --from=build /opt/app/puller /opt/app/
 COPY --from=build /opt/app/triton-adapter /opt/app/
 COPY --from=build /opt/app/mlserver-adapter /opt/app/
 COPY --from=build /opt/app/model-mesh-triton-adapter/scripts/tf_pb.py /opt/scripts/
