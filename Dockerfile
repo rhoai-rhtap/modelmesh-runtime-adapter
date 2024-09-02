@@ -130,11 +130,11 @@ RUN go mod download
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
 RUN export GOOS=${TARGETOS:-linux} && \
     export GOARCH=${TARGETARCH:-amd64} && \
-    go build -o puller model-serving-puller/main.go && \
-    go build -o triton-adapter model-mesh-triton-adapter/main.go && \
-    go build -o mlserver-adapter model-mesh-mlserver-adapter/main.go && \
-    go build -o ovms-adapter model-mesh-ovms-adapter/main.go && \
-    go build -o torchserve-adapter model-mesh-torchserve-adapter/main.go
+    go build -o puller /model-serving-puller/main.go && \
+    go build -o triton-adapter /model-mesh-triton-adapter/main.go && \
+    go build -o mlserver-adapter /model-mesh-mlserver-adapter/main.go && \
+    go build -o ovms-adapter /model-mesh-ovms-adapter/main.go && \
+    go build -o torchserve-adapter /model-mesh-torchserve-adapter/main.go
 
 
 ###############################################################################
