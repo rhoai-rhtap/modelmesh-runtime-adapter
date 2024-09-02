@@ -22,7 +22,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/redhat-user-workloads/rhoai-tenant/modelmesh/modelmesh-runtime-adapter-b2:{{revision}}
+    value: quay.io/rhoai/modelmesh-runtime-adapter/modelmesh-runtime-adapter-b2:{{revision}}
   - name: dockerfile
     value: Dockerfile
   - name: path-context
