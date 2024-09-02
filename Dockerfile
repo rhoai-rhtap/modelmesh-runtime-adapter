@@ -128,8 +128,8 @@ RUN go mod download
 
 # Build the binaries using native go compiler from BUILDPLATFORM but compiled output for TARGETPLATFORM
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
-RUN ls -la ./model-serving-puller/
-RUN ls -la ./model-mesh-triton-adapter/
+RUN ls -la model-serving-puller/
+RUN ls -la model-mesh-triton-adapter/
 
 RUN export GOOS=${TARGETOS:-linux} && \
     export GOARCH=${TARGETARCH:-amd64} && \
