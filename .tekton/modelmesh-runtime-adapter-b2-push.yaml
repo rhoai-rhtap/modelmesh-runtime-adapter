@@ -30,7 +30,11 @@ spec:
     value: .
   - name: prefetch-input
     value: |
-      [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": "konflux-files", "requirements_files": ["requirements.txt"], "allow_binary": "true"}]
+      [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": ".", "requirements_files": ["requirements.txt"], "allow_binary": "true"}]
+  - name: build-args
+    value: ["BUILD_BASE=registry.access.redhat.com/ubi8/go-toolset:1.21"]
+
+
   pipelineSpec:
     finally:
     - name: show-sbom
@@ -46,7 +50,7 @@ spec:
         - name: kind
           value: task
         resolver: bundles
-    - name: show-summary
+    - name: show-summaryst
       params:
       - name: pipelinerun-name
         value: $(context.pipelineRun.name)
@@ -265,7 +269,8 @@ spec:
         - name: name
           value: buildah
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:83db74702b5f0d714b3aae066faa5037d3f096f9fa108d18c0e78317fa35f1fd
+          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:71d3bb81d1c7c9f99946b5f1d4844664f2036636fd114cf5232db644bc088981
+         # value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:83db74702b5f0d714b3aae066faa5037d3f096f9fa108d18c0e78317fa35f1fd
         - name: kind
           value: task
         resolver: bundles
@@ -500,7 +505,7 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 5Gi
+            storage: 7Gi
       status: {}
   - name: git-auth
     secret:
