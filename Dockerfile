@@ -17,6 +17,8 @@
 # Stage 1: Create the developer image for the BUILDPLATFORM only
 ###############################################################################
 ARG GOLANG_VERSION=1.21
+ARG BUILD_BASE=develop
+
 FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS develop
 
 ARG PROTOC_VERSION=21.5
@@ -78,11 +80,14 @@ RUN set -eux; \
 WORKDIR /opt/app
 
 COPY go.mod go.sum ./
+# Download dependencies before copying the source so they will be cached
+RUN go mod download
 
 # Install go protoc plugins
 # no required module provides package google.golang.org/grpc/cmd/protoc-gen-go-grpc
 # to add it run `go get google.golang.org/grpc/cmd/protoc-gen-go-grpc`
-ENV PATH $HOME/go/bin:$PATH
+ENV GOPATH $HOME/go
+ENV PATH $GOPATH/bin:$PATH
 RUN true \
     && go get google.golang.org/grpc/cmd/protoc-gen-go-grpc \
     && go install google.golang.org/protobuf/cmd/protoc-gen-go \
@@ -98,8 +103,6 @@ RUN git init && \
     git config --global --add safe.directory "*" && \
     rm -rf .git
 
-# Download dependencies before copying the source so they will be cached
-RUN go mod download
 
 # the ubi/go-toolset image doesn't define ENTRYPOINT or CMD, but we need it to run 'make develop'
 CMD /bin/bash
@@ -108,11 +111,17 @@ CMD /bin/bash
 ###############################################################################
 # Stage 2: Run the go build with BUILDPLATFORM's native go compiler
 ###############################################################################
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS build
+FROM --platform=$BUILDPLATFORM $BUILD_BASE AS build
 
 LABEL image="build"
 
+USER root
+
+# needed for konflux as the previous stege is not used
 WORKDIR /opt/app
+COPY go.mod go.sum ./
+# Download dependencies before copying the source so they will be cached
+RUN go mod download
 
 # Copy the source
 COPY . ./
@@ -120,18 +129,14 @@ COPY . ./
 # https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 # don't provide "default" values (e.g. 'ARG TARGETARCH=amd64') for non-buildx environments,
 # see https://github.com/docker/buildx/issues/510
-ARG TARGETOS=amd64
-ARG TARGETARCH=linux
-
-WORKDIR /opt/app
-
-COPY go.mod go.sum ./
-RUN go mod download
+# ARG TARGETOS
+# ARG TARGETARCH
 
 # Build the binaries using native go compiler from BUILDPLATFORM but compiled output for TARGETPLATFORM
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
-
-RUN export GOOS=${TARGETOS:-linux} && \
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg \
+    export GOOS=${TARGETOS:-linux} && \
     export GOARCH=${TARGETARCH:-amd64} && \
     go build -o puller model-serving-puller/main.go && \
     go build -o triton-adapter model-mesh-triton-adapter/main.go && \
@@ -143,7 +148,7 @@ RUN export GOOS=${TARGETOS:-linux} && \
 ###############################################################################
 # Stage 3: Copy build assets to create the smallest final runtime image
 ###############################################################################
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.8 as runtime
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest as runtime
 
 ARG USER=2000
 
@@ -151,47 +156,31 @@ USER root
 
 # install python to convert keras to tf
 # NOTE: tensorflow not supported on PowerPC (ppc64le) or System Z (s390x) https://github.com/tensorflow/tensorflow/issues/46181
-#--mount=type=cache,target=/root/.cache/microdnf:rw \
-# RUN microdnf install --setopt=cachedir=/root/.cache/microdnf \
-#        gcc \
-#        gcc-c++ \
-#        python38-devel \
-#        python38 \
-
-# Install packages with modular metadata workaround
-# RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
-#     gcc \
-#     gcc-c++ \
-#     python38 \
-#     python38-devel \
-#     nodejs \
-RUN microdnf install --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
-    gcc \
-    gcc-c++ \
-    python38 \
-    python38-devel \
-    # validates if it still needed in the builder iamge.
-    nodejs \
+RUN --mount=type=cache,target=/root/.cache/microdnf:rw \
+    microdnf install --setopt=cachedir=/root/.cache/microdnf --setopt=ubi-8-appstream-rpms.module_hotfixes=1 \
+       gcc \
+       gcc-c++ \
+       python38-devel \
+       python38 \
     && ln -sf /usr/bin/python3 /usr/bin/python \
     && ln -sf /usr/bin/pip3 /usr/bin/pip \
     && true
 
 # need to upgrade pip and install wheel before installing grpcio, before installing tensorflow on aarch64
 # use caching to speed up multi-platform builds
+COPY requirements.txt requirements.txt
 ENV PIP_CACHE_DIR=/root/.cache/pip
-##--mount=type=cache,target=/root/.cache/pip \
-# RUN pip install --upgrade pip && \
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
 #     pip install wheel && \
-    # pip install flit && \
-    # pip install flit_core==3.9.0 && \
-RUN pip install grpcio && \
-    # pin to 3.10.0 to avoid error: libhdf5.so: cannot open shared object file: No such file or directory \
-    # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
-    # for arm yet.
-    pip install h5py==3.10.0 && \
-    pip install tensorflow-io-gcs-filesystem==0.34.0 && \
-    pip install tensorflow
-
+#     pip install grpcio && \
+#     # pin to 3.10.0 to avoid error: libhdf5.so: cannot open shared object file: No such file or directory \
+#     # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
+#     # for arm yet.
+#     pip install h5py==3.10.0 && \
+#    # pip install tensorflow-io-gcs-filesystem==0.34.0 && \
+#     pip install tensorflow
+RUN rm -rfv requirements.txt
 USER ${USER}
 
 # Add modelmesh version
