@@ -35,8 +35,6 @@ spec:
       [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": ".", "requirements_files": ["requirements.txt"], "allow_binary": "true"}]
   - name: build-args
     value: ["BUILD_BASE=registry.access.redhat.com/ubi8/go-toolset:1.21"]
-  - name: build-args-file
-    value: "test-param.txt"  
 
   pipelineSpec:
     finally:

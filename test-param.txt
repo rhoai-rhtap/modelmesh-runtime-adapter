@@ -1,1 +1,0 @@
-BUILD_BASE=registry.access.redhat.com/ubi8/go-toolset:1.21
