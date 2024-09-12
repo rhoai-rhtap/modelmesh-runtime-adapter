@@ -1,0 +1,10 @@
+contentOrigin:
+  repofiles:
+    - ubi.repo
+packages:
+  - gcc
+  - gcc-c++
+  - python38
+  - python38-devel
+  - nodejs
+  - glibc-minimal-langpack
