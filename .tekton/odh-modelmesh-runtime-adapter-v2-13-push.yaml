@@ -23,7 +23,7 @@ spec:
   - name: revision
     value: '{{revision}}'
   - name: output-image
-    value: quay.io/rhoai/odh-modelmesh-runtime-adapter:{{revision}}
+    value: quay.io/rhoai/odh-modelmesh-runtime-adapter-rhel8:{{revision}}
   - name: dockerfile
     value: Dockerfile
   - name: path-context
