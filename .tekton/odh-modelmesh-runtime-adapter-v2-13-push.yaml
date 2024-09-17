@@ -31,6 +31,8 @@ spec:
   - name: prefetch-input
     value: |
       [{"type": "gomod"}, {"type": "rpm"}, {"type": "pip", "path": ".", "requirements_files": ["requirements.txt"], "allow_binary": "true"}]
+  - name: build-args
+    value: ["BUILD_BASE=registry.access.redhat.com/ubi8/go-toolset:1.21"]
   pipelineSpec:
     finally:
     - name: show-sbom
@@ -46,7 +48,7 @@ spec:
         - name: kind
           value: task
         resolver: bundles
-    - name: show-summary
+    - name: show-summaryst
       params:
       - name: pipelinerun-name
         value: $(context.pipelineRun.name)
@@ -240,7 +242,7 @@ spec:
         - name: name
           value: buildah
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:a523f60203d90e149f96ec776b47ce85a7acfd6d634ddfc18f4a03f14e08ea0e
+          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:71d3bb81d1c7c9f99946b5f1d4844664f2036636fd114cf5232db644bc088981
         - name: kind
           value: task
         resolver: bundles
