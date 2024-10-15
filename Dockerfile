@@ -12,18 +12,112 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# syntax=docker/dockerfile:1.2
+###############################################################################
+# Stage 1: Create the developer image for the BUILDPLATFORM only
+###############################################################################
 ARG GOLANG_VERSION=1.21
 ARG BUILD_BASE=develop
 
-FROM --platform=$BUILDPLATFORM registry.redhat.io/ubi8/go-toolset@sha256:4ec05fd5b355106cc0d990021a05b71bbfb9231e4f5bdc0c5316515edf6a1c96 AS build
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS develop
 
+ARG PROTOC_VERSION=21.5
+
+USER root
+ENV HOME=/root
+
+# Install build and dev tools
+# NOTE: Require python38 to install pre-commit
+RUN --mount=type=cache,target=/root/.cache/dnf:rw \
+    dnf install --setopt=cachedir=/root/.cache/dnf -y --nodocs \
+        nodejs \
+        python38 \
+    && ln -sf /usr/bin/python3 /usr/bin/python \
+    && ln -sf /usr/bin/pip3 /usr/bin/pip \
+    && true
+
+# Install pre-commit
+ENV PIP_CACHE_DIR=/root/.cache/pip
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install pre-commit
+
+# When using the BuildKit backend, Docker predefines a set of ARG variables with
+# information on the platform of the node performing the build (build platform)
+# These arguments are defined in the global scope but are not automatically available
+# inside build stages. We need to expose the BUILDOS and BUILDARCH inside the build
+# stage and redefine it without a value
+# https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
+ARG BUILDOS
+ARG BUILDARCH
+
+# Install protoc
+# The protoc download files use a different variation of architecture identifiers
+# from the Docker BUILDARCH forms amd64, arm64, ppc64le, s390x
+#   protoc-22.2-linux-aarch_64.zip  <- arm64
+#   protoc-22.2-linux-ppcle_64.zip  <- ppc64le
+#   protoc-22.2-linux-s390_64.zip   <- s390x
+#   protoc-22.2-linux-x86_64.zip    <- amd64
+# so we need to map the arch identifiers before downloading the protoc.zip using
+# shell parameter expansion: with the first character of a parameter being an
+# exclamation point (!) it introduces a level of indirection where the value
+# of the parameter is used as the name of another variable and the value of that
+# other variable is the result of the expansion, e.g. the echo statement in the
+# following three lines of shell script print "x86_64"
+#   BUILDARCH=amd64
+#   amd64=x86_64
+#   echo ${!BUILDARCH}
+RUN set -eux; \
+    amd64=x86_64; \
+    arm64=aarch_64; \
+    ppc64le=ppcle_64; \
+    s390x=s390_64; \
+    wget -qO protoc.zip "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-${BUILDOS}-${!BUILDARCH}.zip" \
+    && sha256sum protoc.zip \
+    && unzip protoc.zip -x readme.txt -d /usr/local \
+    && protoc --version \
+    && true
+
+WORKDIR /opt/app
+
+COPY go.mod go.sum ./
+# Download dependencies before copying the source so they will be cached
+RUN go mod download
+
+# Install go protoc plugins
+# no required module provides package google.golang.org/grpc/cmd/protoc-gen-go-grpc
+# to add it run `go get google.golang.org/grpc/cmd/protoc-gen-go-grpc`
+ENV GOPATH $HOME/go
+ENV PATH $GOPATH/bin:$PATH
+RUN true \
+    && go get google.golang.org/grpc/cmd/protoc-gen-go-grpc \
+    && go install google.golang.org/protobuf/cmd/protoc-gen-go \
+                  google.golang.org/grpc/cmd/protoc-gen-go-grpc \
+    && protoc-gen-go --version \
+    && true
+
+# Download and initialize the pre-commit environments before copying the source so they will be cached
+COPY .pre-commit-config.yaml ./
+RUN git init && \
+    pre-commit install-hooks && \
+    # Fix: 'fatal: detected dubious ownership in repository' \
+    git config --global --add safe.directory "*" && \
+    rm -rf .git
+
+
+# the ubi/go-toolset image doesn't define ENTRYPOINT or CMD, but we need it to run 'make develop'
+CMD /bin/bash
+
+
+###############################################################################
+# Stage 2: Run the go build with BUILDPLATFORM's native go compiler
+###############################################################################
 FROM --platform=$BUILDPLATFORM $BUILD_BASE AS build
 
 LABEL image="build"
 
 USER root
 
-# needed for konflux as the previous stage is not used
+# needed for konflux as the previous stege is not used
 WORKDIR /opt/app
 COPY go.mod go.sum ./
 # Download dependencies before copying the source so they will be cached
@@ -35,8 +129,8 @@ COPY . ./
 # https://docs.docker.com/engine/reference/builder/#automatic-platform-args-in-the-global-scope
 # don't provide "default" values (e.g. 'ARG TARGETARCH=amd64') for non-buildx environments,
 # see https://github.com/docker/buildx/issues/510
-ARG TARGETOS
-ARG TARGETARCH
+# ARG TARGETOS
+# ARG TARGETARCH
 
 # Build the binaries using native go compiler from BUILDPLATFORM but compiled output for TARGETPLATFORM
 # https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/
@@ -78,6 +172,14 @@ COPY requirements.txt requirements.txt
 ENV PIP_CACHE_DIR=/root/.cache/pip
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements.txt
+#     pip install wheel && \
+#     pip install grpcio && \
+#     # pin to 3.10.0 to avoid error: libhdf5.so: cannot open shared object file: No such file or directory \
+#     # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
+#     # for arm yet.
+#     pip install h5py==3.10.0 && \
+#    # pip install tensorflow-io-gcs-filesystem==0.34.0 && \
+#     pip install tensorflow
 RUN rm -rfv requirements.txt
 USER ${USER}
 
@@ -103,5 +205,3 @@ LABEL name="model-serving-runtime-adapter" \
       summary="Sidecar container which runs in the ModelMesh Serving model server pods" \
       description="Container which runs in each model serving pod acting as an intermediary between ModelMesh and third-party model-server containers"
 
-# Don't define an entrypoint. This is a multi-purpose image so the user should specify which binary they want to run (e.g. /opt/app/puller or /opt/app/triton-adapter)
-ENTRYPOINT ["/opt/app/puller"]
