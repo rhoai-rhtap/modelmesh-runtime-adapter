@@ -25,7 +25,7 @@ opt-einsum==3.3.0
 packaging==24.1
 protobuf==4.25.4
 pyasn1==0.6.0
-pyasn1-modules==0.4.0
+pyasn1-modules==0.4.1
 requests==2.32.3
 requests-oauthlib==2.0.0
 rsa==4.9
