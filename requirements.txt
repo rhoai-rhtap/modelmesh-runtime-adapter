@@ -23,7 +23,7 @@ numpy==1.24.3
 oauthlib==3.2.2
 opt-einsum==3.3.0
 packaging==24.1
-protobuf==4.25.4
+protobuf==4.25.6
 pyasn1==0.6.0
 pyasn1-modules==0.4.0
 requests==2.32.3
