@@ -379,9 +379,9 @@ urllib3==2.2.2 ; python_version >= "3.8" and python_version < "3.12" \
 werkzeug==3.0.4 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:02c9eb92b7d6c06f31a782811505d2157837cea66aaede3e217c7c27c039476c \
     --hash=sha256:34f2371506b250df4d4f84bfe7b0921e4762525762bbd936614909fe25cd7306
-wheel==0.44.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:2376a90c98cc337d18623527a97c31797bd02bad0033d41547043a1cbfbe448f \
-    --hash=sha256:a29c3f2817e95ab89aa4660681ad547c0e9547f20e75b0562fe7723c9a2a9d49
+wheel==0.45.1; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729 \
+    --hash=sha256:708e7481cc80179af0e556bbf0cc00b8444c7321e2700b8d8580231d13017248
 wrapt==1.16.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:0d2691979e93d06a95a26257adb7bfd0c93818e89b1406f5a28f36e0d8c1e1fc \
     --hash=sha256:14d7dc606219cdd7405133c713f2c218d4252f2a469003f8c46bb92d5d095d81 \
