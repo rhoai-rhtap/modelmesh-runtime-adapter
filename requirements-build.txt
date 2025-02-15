@@ -52,9 +52,9 @@ flit-core==3.9.0 \
     --hash=sha256:72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba \
     --hash=sha256:7aada352fb0c7f5538c4fafeddf314d3a6a92ee8e2b1de70482329e42de70301
     # via -r requirements-build.in
-meson==1.5.1 \
-    --hash=sha256:5531e24e6cfd6000bf1c712793cf28dff032841370b1a3b941a894e4fde46e5a \
-    --hash=sha256:567e533adf255de73a2de35049b99923caf872a455af9ce03e01077e0d384bed
+meson==1.7.0 \
+    --hash=sha256:08efbe84803eed07f863b05092d653a9d348f7038761d900412fddf56deb0284 \
+    --hash=sha256:ae3f12953045f3c7c60e27f2af1ad862f14dee125b4ed9bcb8a842a5080dbf85
     # via
     #   -r requirements-build.in
     #   meson-python
