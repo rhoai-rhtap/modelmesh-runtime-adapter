@@ -36,7 +36,7 @@ tensorflow==2.13.1
 #tensorflow-cpu-aws==2.13.1
 tensorflow-estimator==2.13.0
 # Note, for `tensorflow-io-gcs-filesystem` it must be pinned to 0.34.0 manually after generating the `requirements.txt` file.
-tensorflow-io-gcs-filesystem==0.34.0
+tensorflow-io-gcs-filesystem==0.37.1
 termcolor==2.4.0
 typing-extensions==4.5.0
 urllib3==2.2.2
