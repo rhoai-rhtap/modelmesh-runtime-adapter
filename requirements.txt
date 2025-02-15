@@ -113,9 +113,9 @@ flit-core==3.9.0 ; python_version >= "3.8" and python_version < "3.12" \
 flit==3.6.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:03b9812856c7e4368dfa419a87f406e49414e871de02c43c4f754d35dfd70f87 \
     --hash=sha256:b1464e006df4df4c8eeb37671c0e0ce66e1d04e4a36d91b702f180a25fde3c11
-gast==0.4.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:40feb7b8b8434785585ab224d1568b857edb18297e5a3047f1ba012bc83b42c1 \
-    --hash=sha256:b7adcdd5adbebf1adf17378da5ba3f543684dbec47b1cda1f3997e573cd542c4
+gast==0.6.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:52b182313f7330389f72b069ba00f174cfe2a06411099547288839c6cbafbd54 \
+    --hash=sha256:88fc5300d32c7ac6ca7b515310862f71e6fdf2c029bbec7c66c0f5dd47b6b1fb
 google-auth-oauthlib==1.0.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:95880ca704928c300f48194d1770cf5b1462835b6e49db61445a520f793fd5fb \
     --hash=sha256:e375064964820b47221a7e1b7ee1fd77051b6323c3f9e3e19785f78ab67ecfc5
