@@ -367,9 +367,9 @@ tensorflow @ https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.13.1.
 termcolor==2.4.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:9297c0df9c99445c2412e832e882a7884038a25617c60cea2ad69488d4040d63 \
     --hash=sha256:aab9e56047c8ac41ed798fa36d892a37aca6b3e9159f3e0c24bc64a9b3ac7b7a
-tomli-w==1.0.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:9f2a07e8be30a0729e533ec968016807069991ae2fd921a78d42f429ae5f4463 \
-    --hash=sha256:f463434305e0336248cac9c2dc8076b707d8a12d019dd349f5c1e382dd1ae1b9
+tomli-w==1.2.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:188306098d013b691fcadc011abd66727d3c414c571bb01b1a174ba8c983cf90 \
+    --hash=sha256:2dd14fac5a47c27be9cd4c976af5a12d87fb1f0b4512f81d69cce3b35ae25021
 typing-extensions==4.5.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:5cb5f4a79139d699607b3ef622a1dedafa84e115ab0024e0d9c044a9479ca7cb \
     --hash=sha256:fb33085c39dd998ac16d1431ebc293a8b3eedd00fd4a32de0ff79002c19511b4
