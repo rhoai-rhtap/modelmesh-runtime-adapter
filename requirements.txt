@@ -13,7 +13,7 @@ grpcio==1.66.1
 # if not version is set, it will install the 3.11.0 version which, seems that does not have the h5py dependencies \
 # for arm yet.
 h5py==3.10.0
-idna==3.8
+idna==3.10
 importlib-metadata==8.4.0
 keras==2.13.1
 libclang==18.1.1
