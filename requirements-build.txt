@@ -58,9 +58,9 @@ meson==1.5.1 \
     # via
     #   -r requirements-build.in
     #   meson-python
-meson-python==0.16.0 \
-    --hash=sha256:842dc9f5dc29e55fc769ff1b6fe328412fe6c870220fc321060a1d2d395e69e8 \
-    --hash=sha256:9068c17e36c89d6c7ff709fffb2a8a9925e8cd0b02629728e5ceaf2ec505cb5f
+meson-python==0.17.1 \
+    --hash=sha256:30a75c52578ef14aff8392677b09c39346e0a24d2b2c6204b8ed30583c11269c \
+    --hash=sha256:efb91f69f2e19eef7bc9a471ed2a4e730088cc6b39eacaf3e49fc4f930eb5f83
     # via -r requirements-build.in
 packaging==24.1 \
     --hash=sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002 \
