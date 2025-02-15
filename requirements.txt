@@ -315,9 +315,9 @@ numpy==1.24.3 ; python_version >= "3.8" and python_version < "3.12" \
 oauthlib==3.2.2 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:8139f29aac13e25d502680e9e19963e83f16838d48a0d71c287fe40e7067fbca \
     --hash=sha256:9859c40929662bec5d64f34d01c99e093149682a3f38915dc0655d5a633dd918
-opt-einsum==3.3.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:2455e59e3947d3c275477df7f5205b30635e266fe6dc300e3d9f9646bfcea147 \
-    --hash=sha256:59f6475f77bbc37dcf7cd748519c0ec60722e91e63ca114e68821c0c54a46549
+opt-einsum==3.4.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:69bb92469f86a1565195ece4ac0323943e83477171b91d24c35afe028a90d7cd \
+    --hash=sha256:96ca72f1b886d148241348783498194c577fa30a8faac108586b14f1ba4473ac
 packaging==24.1 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002 \
     --hash=sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124
