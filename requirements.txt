@@ -18,7 +18,7 @@ importlib-metadata==8.4.0
 keras==2.13.1
 libclang==18.1.1
 Markdown==3.7
-MarkupSafe==2.1.5
+MarkupSafe==3.0.2
 numpy==1.24.3
 oauthlib==3.2.2
 opt-einsum==3.3.0
