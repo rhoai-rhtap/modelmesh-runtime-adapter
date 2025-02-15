@@ -318,9 +318,9 @@ oauthlib==3.2.2 ; python_version >= "3.8" and python_version < "3.12" \
 opt-einsum==3.3.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:2455e59e3947d3c275477df7f5205b30635e266fe6dc300e3d9f9646bfcea147 \
     --hash=sha256:59f6475f77bbc37dcf7cd748519c0ec60722e91e63ca114e68821c0c54a46549
-packaging==24.1 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002 \
-    --hash=sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124
+packaging==24.2; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759 \
+    --hash=sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f
 protobuf==4.25.4 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:051e97ce9fa6067a4546e75cb14f90cf0232dcb3e3d508c448b8d0e4265b61c1 \
     --hash=sha256:0dc4a62cc4052a036ee2204d26fe4d835c62827c855c8a03f29fe6da146b380d \
