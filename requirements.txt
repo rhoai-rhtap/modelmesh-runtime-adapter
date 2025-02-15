@@ -364,9 +364,9 @@ tensorflow-io-gcs-filesystem @ https://github.com/tensorflow/io/archive/refs/tag
     --hash=sha256:0df00891669390078a003cedbdd3b8e645c718b111917535fa1d7725e95cdb95
 tensorflow @ https://github.com/tensorflow/tensorflow/archive/refs/tags/v2.13.1.tar.gz \
     --hash=sha256:89c07aebd4f41fbe0d08cc88aef00305542134f2f16d3b62918dc3c1182f33e2
-termcolor==2.4.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:9297c0df9c99445c2412e832e882a7884038a25617c60cea2ad69488d4040d63 \
-    --hash=sha256:aab9e56047c8ac41ed798fa36d892a37aca6b3e9159f3e0c24bc64a9b3ac7b7a
+termcolor==2.5.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:37b17b5fc1e604945c2642c872a3764b5d547a48009871aea3edd3afa180afb8 \
+    --hash=sha256:998d8d27da6d48442e8e1f016119076b690d962507531df4890fcd2db2ef8a6f
 tomli-w==1.0.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:9f2a07e8be30a0729e533ec968016807069991ae2fd921a78d42f429ae5f4463 \
     --hash=sha256:f463434305e0336248cac9c2dc8076b707d8a12d019dd349f5c1e382dd1ae1b9
