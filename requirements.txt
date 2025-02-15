@@ -21,7 +21,7 @@ Markdown==3.7
 MarkupSafe==2.1.5
 numpy==1.24.3
 oauthlib==3.2.2
-opt-einsum==3.3.0
+opt-einsum==3.4.0
 packaging==24.1
 protobuf==4.25.4
 pyasn1==0.6.0
