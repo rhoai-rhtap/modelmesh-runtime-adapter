@@ -12,7 +12,7 @@ require (
 	github.com/go-logr/zapr v1.2.3
 	github.com/golang/mock v1.6.0
 	github.com/joho/godotenv v1.4.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.10.0
 	go.uber.org/zap v1.24.0
 	golang.org/x/sync v0.1.0
 	google.golang.org/api v0.114.0
