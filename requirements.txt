@@ -110,9 +110,9 @@ flatbuffers==24.3.25 ; python_version >= "3.8" and python_version < "3.12" \
 flit-core==3.9.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba \
     --hash=sha256:7aada352fb0c7f5538c4fafeddf314d3a6a92ee8e2b1de70482329e42de70301
-flit==3.6.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:03b9812856c7e4368dfa419a87f406e49414e871de02c43c4f754d35dfd70f87 \
-    --hash=sha256:b1464e006df4df4c8eeb37671c0e0ce66e1d04e4a36d91b702f180a25fde3c11
+flit==3.11.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:58d0a07f684c315700c9c54a661a1130995798c3e495db0db53ce6e7d0121825 \
+    --hash=sha256:e4316b02fe6392e65dc489f78b561e635fd1c74652a52b95a8ce5939d688717e
 gast==0.4.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:40feb7b8b8434785585ab224d1568b857edb18297e5a3047f1ba012bc83b42c1 \
     --hash=sha256:b7adcdd5adbebf1adf17378da5ba3f543684dbec47b1cda1f3997e573cd542c4
