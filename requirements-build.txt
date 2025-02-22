@@ -73,9 +73,9 @@ pkgconfig==1.5.5 \
     --hash=sha256:d20023bbeb42ee6d428a0fac6e0904631f545985a10cdd71a20aa58bc47a4209 \
     --hash=sha256:deb4163ef11f75b520d822d9505c1f462761b4309b1bb713d08689759ea8b899
     # via -r requirements-build.in
-poetry-core==1.9.0 \
-    --hash=sha256:4e0c9c6ad8cf89956f03b308736d84ea6ddb44089d16f2adc94050108ec1f5a1 \
-    --hash=sha256:fa7a4001eae8aa572ee84f35feb510b321bd652e5cf9293249d62853e1f935a2
+poetry-core==2.1.1 \
+    --hash=sha256:bc3b0382ab4d00d5d780277fd0aad1580eb4403613b37fc60fec407b5bee1fe6 \
+    --hash=sha256:c1a1f6f00e4254742f40988a8caf665549101cf9991122cd5de1198897768b1a
     # via -r requirements-build.in
 pyproject-metadata==0.8.0 \
     --hash=sha256:376d5a00764ac29440a54579f88e66b7d9cb7e629d35c35a1c7248bfebc9b455 \
