@@ -107,9 +107,9 @@ docutils==0.20.1 ; python_version >= "3.8" and python_version < "3.12" \
 flatbuffers==24.3.25 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:8dbdec58f935f3765e4f7f3cf635ac3a77f83568138d6a2311f524ec96364812 \
     --hash=sha256:de2ec5b203f21441716617f38443e0a8ebf3d25bf0d9c0bb0ce68fa00ad546a4
-flit-core==3.9.0 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba \
-    --hash=sha256:7aada352fb0c7f5538c4fafeddf314d3a6a92ee8e2b1de70482329e42de70301
+flit-core==3.11.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:6ceeee3219e9d2ea282041f3e027c441597b450b33007cb81168e887b6113a8f \
+    --hash=sha256:fe464c086f630f106c0fc5001ee377980f45938f03f8f0d03da08a4841748541
 flit==3.6.0 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:03b9812856c7e4368dfa419a87f406e49414e871de02c43c4f754d35dfd70f87 \
     --hash=sha256:b1464e006df4df4c8eeb37671c0e0ce66e1d04e4a36d91b702f180a25fde3c11
