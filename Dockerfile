@@ -19,7 +19,7 @@
 ARG GOLANG_VERSION=1.21
 ARG BUILD_BASE=develop
 
-FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.21 AS develop
+FROM --platform=$BUILDPLATFORM registry.access.redhat.com/ubi8/go-toolset:1.22.9-2.1740673425 AS develop
 
 ARG PROTOC_VERSION=21.5
 
