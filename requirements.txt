@@ -205,9 +205,9 @@ idna==3.8 ; python_version >= "3.8" and python_version < "3.12" \
 importlib-metadata==8.4.0 ; python_version >= "3.8" and python_version < "3.10" \
     --hash=sha256:66f342cc6ac9818fc6ff340576acd24d65ba0b3efabb2b4ac08b598965a4a2f1 \
     --hash=sha256:9a547d3bc3608b025f93d403fdd1aae741c24fbb8314df4b155675742ce303c5
-keras==2.13.1 ; python_version >= "3.8" and python_version < "3.12" \
-    --hash=sha256:5ce5f706f779fa7330e63632f327b75ce38144a120376b2ae1917c00fa6136af \
-    --hash=sha256:5df12cc241a015a11b65ddb452c0eeb2744fce21d9b54ba48db87492568ccc68
+keras==3.9.0; python_version >= "3.8" and python_version < "3.12" \
+    --hash=sha256:71078e833994384f45d5ea192d18f0969a12bd2572a5d15968c755945ad91d1c \
+    --hash=sha256:b5bf04e7c64c3176eda5124d035005bb7a676fb505f42496c7b03a99d5683652
 libclang==18.1.1 ; python_version >= "3.8" and python_version < "3.12" \
     --hash=sha256:0b2e143f0fac830156feb56f9231ff8338c20aecfe72b4ffe96f19e5a1dbb69a \
     --hash=sha256:3f0e1f49f04d3cd198985fea0511576b0aee16f9ff0e0f0cad7f9c57ec3c20e8 \
