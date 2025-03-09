@@ -1,6 +1,8 @@
 module github.com/kserve/modelmesh-runtime-adapter
 
-go 1.19
+go 1.23.0
+
+toolchain go1.23.7
 
 require (
 	cloud.google.com/go/storage v1.28.1
@@ -14,7 +16,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.24.0
-	golang.org/x/sync v0.1.0
+	golang.org/x/sync v0.12.0
 	google.golang.org/api v0.114.0
 	google.golang.org/grpc v1.56.3
 	google.golang.org/protobuf v1.32.0
