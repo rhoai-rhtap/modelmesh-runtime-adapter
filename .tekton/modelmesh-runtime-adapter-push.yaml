@@ -1,7 +1,6 @@
 apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
-#test
   annotations:
     build.appstudio.openshift.io/repo: https://github.com/rhoai-rhtap/modelmesh-runtime-adapter?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
@@ -461,7 +460,8 @@ spec:
       optional: true
     - name: netrc
       optional: true
-  taskRunTemplate: {}
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-modelmesh-runtime-adapter
   workspaces:
   - name: workspace
     volumeClaimTemplate:
