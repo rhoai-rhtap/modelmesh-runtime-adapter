@@ -1,6 +1,6 @@
 module github.com/kserve/modelmesh-runtime-adapter
 
-go 1.19
+go 1.23
 
 require (
 	cloud.google.com/go/storage v1.28.1
@@ -66,7 +66,7 @@ require (
 	k8s.io/apimachinery v0.26.1 // indirect
 	k8s.io/klog/v2 v2.90.1 // indirect
 	k8s.io/utils v0.0.0-20230209194617-a36077c30491 // indirect
-	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
+	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 )
 
