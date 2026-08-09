@@ -19,7 +19,7 @@ require (
 	google.golang.org/grpc v1.56.3
 	google.golang.org/protobuf v1.32.0
 	// controller-runtime dependency is only used for logging
-	sigs.k8s.io/controller-runtime v0.14.6
+	sigs.k8s.io/controller-runtime v0.24.1
 )
 
 require (
